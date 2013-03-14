@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 每一个Mapper,对应对一个实体的操作 -->
+<mapper namespace="com.lee.study.domain.User">
+	<!-- 在这里直接写User是因为在Mybatis-config配置文件中已经配置了typeAliases，自动进行了关联 -->
+	<insert id="add" parameterType="User">
+		insert into t_user (username,password,nickname,type)
+		 values(#{username},#{password},#{nickname},#{type})
+	</insert>
+	
+	<update id="update" parameterType="User">
+		update t_user set password=#{password},nickname=#{nickname},type=#{type} 
+		where id=#{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		delete from t_user where id=#{id}
+	</delete>
+	<!-- 定义一个关联的关系 -->
+	<resultMap type="User" id="userMap" autoMapping="true">
+		<id column="user_id" property="id"/>
+		<collection property="addresses" ofType="Address">
+			<id column="a_id" property="id"/>
+			<result column="phone" property="phone"/>
+			<result column="postcode" property="postcode"/>
+			<result column="name" property="name"/>
+		</collection>
+	</resultMap>
+	<!-- 根据User的ID，关联Address表查找一天User记录 -->
+	<select id="load" parameterType="int" resultMap="userMap">
+		select *,t2.id as 'a_id' from t_user t1 left join t_address t2 on(t1.id = t2.user_id) where t1.id=#{id}
+	</select>
+	<!-- 根据用户名来查找User -->
+	<select id="load_by_username" resultMap="userMap" parameterType="string">
+		select *,t2.id as 'a_id' from t_user t1 left join t_address t2 on(t1.id = t2.user_id) where t1.username=#{username}
+	</select>
+</mapper>
