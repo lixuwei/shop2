@@ -1,13 +1,23 @@
 package com.lee.study.dao.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 
 import com.lee.study.dao.UserDao;
 import com.lee.study.domain.Pager;
 import com.lee.study.domain.ShopException;
+import com.lee.study.domain.SystemContext;
 import com.lee.study.domain.User;
 import com.lee.study.util.MyBatisUtil;
-
+/**
+ * UserDao的数据操作接口实现
+ * @author lee
+ *	
+ * 2013-3-14  下午10:15:24
+ */
 public class UserDaoImpl implements UserDao{
 
 	@Override
@@ -91,8 +101,33 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public Pager<User> find(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		int pageSize = SystemContext.getPageSize();
+		int pageOffset = SystemContext.getPageOffset();
+		String sort = SystemContext.getSort();
+		String order = SystemContext.getOrder();
+		Pager<User> pages = new Pager<User>();
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = MyBatisUtil.createSession();
+			Map<String,Object> params = new HashMap<String, Object>();
+			params.put("name", "%"+name+"%");
+			params.put("pageSize", pageSize);
+			params.put("pageOffset", pageOffset);
+			params.put("sort", sort);
+			params.put("order", order);
+			List<User> datas = sqlSession.selectList(User.class.getName()+".find", params);
+			pages.setDatas(datas);
+			pages.setPageSize(pageSize);
+			pages.setPageOffset(pageOffset);
+			
+			int totalRecord = sqlSession.selectOne(User.class.getName()+".find_count", params);
+			pages.setTotalRecord(totalRecord);
+		} finally {
+			MyBatisUtil.closeSessioin(sqlSession);
+		}
+		
+		return pages;
 	}
 
 	@Override

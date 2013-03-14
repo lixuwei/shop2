@@ -14,7 +14,7 @@ import com.lee.study.dao.impl.UserDaoImpl;
 import com.lee.study.domain.User;
 
 /**
- * Unit test for simple App.
+ * Unit test UserDao for simple App.
  */
 public class AppTest {
 	
@@ -73,7 +73,8 @@ public class AppTest {
 	}
 	@Test
 	public void testFindUserByUsername(){
-		User user = (User)sqlSession.selectOne(User.class.getName()+".load_by_username","lixuwei");
+		User user = (User)sqlSession.selectOne(User.class.getName()+".load_by_username","lixuwei2");
 		System.out.println(user);
 	}
+	
 }
