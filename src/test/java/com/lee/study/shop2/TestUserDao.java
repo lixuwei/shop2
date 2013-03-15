@@ -20,8 +20,8 @@ public class TestUserDao {
 		UserDaoImpl ud = new UserDaoImpl();
 		SystemContext.setPageOffset(0);
 		SystemContext.setPageSize(2);
-		SystemContext.setSort("desc");
-		SystemContext.setOrder("id");
+		SystemContext.setSort("id");
+		SystemContext.setOrder("desc");
 		Pager<User> pager = ud.find("lixu");
 		System.out.println(pager.getTotalRecord());
 		for (User user : pager.getDatas()) {
