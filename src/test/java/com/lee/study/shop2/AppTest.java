@@ -11,7 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.lee.study.dao.impl.UserDaoImpl;
+import com.lee.study.domain.Address;
 import com.lee.study.domain.User;
+
 
 /**
  * Unit test UserDao for simple App.
@@ -19,6 +21,7 @@ import com.lee.study.domain.User;
 public class AppTest {
 	
 	public SqlSession sqlSession = null;
+
 	
 	@Before
 	public void init(){
@@ -31,7 +34,7 @@ public class AppTest {
 		}
 	}
    
-	@Test
+	
 	public void testAdd(){
 		User user = new User();
 		user.setNickname("wukong");
@@ -43,7 +46,7 @@ public class AppTest {
 		sqlSession.commit();
 		sqlSession.close();
 	}
-	@Test
+	
 	public void testAdd2(){
 		User user = new User();
 		user.setNickname("wukong");
@@ -57,7 +60,7 @@ public class AppTest {
 	/**
 	 * 
 	 */
-	@Test
+	
 	public void testDelete(){
 		/**
 		 * execute delete method
@@ -68,10 +71,15 @@ public class AppTest {
 	}
 	@Test
 	public void testFindUserById(){
-		User user = (User)sqlSession.selectOne(User.class.getName()+".load",3);
+		User user = (User)sqlSession.selectOne(User.class.getName()+".load",1);
 		System.out.println(user);
 	}
 	@Test
+	public void testFindAddressById(){
+		Address address = sqlSession.selectOne("com.lee.study.domain.Address.load",2);
+		System.out.println(address);
+	}
+	
 	public void testFindUserByUsername(){
 		User user = (User)sqlSession.selectOne(User.class.getName()+".load_by_username","lixuwei2");
 		System.out.println(user);

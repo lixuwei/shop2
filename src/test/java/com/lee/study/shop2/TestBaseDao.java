@@ -7,7 +7,7 @@ import com.lee.study.domain.User;
 
 public class TestBaseDao {
 
-	@Test
+
 	public void testBaseDao(){
 		
 		UserServiceImpl us = new UserServiceImpl();

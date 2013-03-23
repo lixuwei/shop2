@@ -15,7 +15,7 @@ import com.lee.study.domain.User;
  */
 public class TestUserDao {
 	
-	@Test
+	
 	public void testFind(){
 		UserDaoImpl ud = new UserDaoImpl();
 		SystemContext.setPageOffset(0);

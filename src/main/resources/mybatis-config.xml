@@ -20,5 +20,6 @@
 	</environments>
 	<mappers>
 		<mapper resource="com/lee/study/domain/User.xml"/>
+		<mapper resource="com/lee/study/domain/Address.xml"/>
 	</mappers>
 </configuration>
