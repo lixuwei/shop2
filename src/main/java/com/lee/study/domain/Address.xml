@@ -22,7 +22,7 @@
 		<id column="a_id" property="id"/>
 		<!-- 使用以下方式进行关联最大的问题就是N+1问题，所以以下取关联的方式不会被使用 -->
 		<!-- <association property="user" column="user_id" javaType="User" select="itat.zttc.shop.model.User.load"/> -->
-		<association property="user" javaType="User" resultMap="userMap">
+		<association property="user" javaType="User" >
 			<id column="user_id" property="id"/>
 			<result column="username" property="username"/>
 			<result column="nickname" property="nickname"/>
